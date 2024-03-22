@@ -8,6 +8,8 @@ const port = 3000;
 // HTTP Logger
 app.use(morgan("combined"));
 
+app.use(express.static(path.join(__dirname, "public")));
+
 // Template engine
 app.engine(
   "hbs",
