@@ -13,6 +13,7 @@ console.log(">>> check env: ", process.env);
 // HTTP Logger
 app.use(morgan("combined"));
 
+// config static files
 app.use(express.static(path.join(__dirname, "public")));
 
 // Template engine
