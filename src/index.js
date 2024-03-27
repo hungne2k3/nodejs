@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const { log } = require("console");
+const { getHomeController, MainHome } = require("./controller/Homecontroller");
 require("dotenv").config();
 const handlebars = require("express-handlebars").engine;
 const app = express();
@@ -29,9 +30,7 @@ app.set("view engine", "hbs");
 // express-handlebars nodejs set views
 app.set("views", path.join(__dirname, "resources/views"));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get("/", MainHome);
 
 app.get("/news", (req, res) => {
   res.render("news");
@@ -41,6 +40,8 @@ app.get("/search", (req, res) => {
   res.render("search");
   console.log(req.query);
 });
+
+app.get("/home", getHomeController);
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`);
