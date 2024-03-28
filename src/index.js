@@ -5,9 +5,15 @@ const { log } = require("console");
 const { getHomeController, MainHome } = require("./controller/Homecontroller");
 require("dotenv").config();
 const handlebars = require("express-handlebars").engine;
+const mysql = require("mysql2");
 const app = express();
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+const database = process.env.DB_DATABASE;
+const dbHost = process.env.DB_HOST;
+const dbPort = process.env.DB_PORT;
 
 console.log(">>> check env: ", process.env);
 
@@ -45,4 +51,18 @@ app.get("/home", getHomeController);
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+// Create the connection to database
+const connection = mysql.createConnection({
+  host: dbHost,
+  port: dbPort,
+  user: user,
+  password: password,
+  database: database,
+});
+
+connection.query("SELECT * FROM Users", (err, results, fields) => {
+  console.log(">>>> Check: ", results); // results contains rows returned by server
+  console.log(">>> Check: ", fields); //
 });
